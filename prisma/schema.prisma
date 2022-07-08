@@ -1,8 +1,10 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-    provider = "prisma-client-js"
+generator trpc {
+    provider       = "prisma-trpc-generator"
+    withMiddleware = true
+    withShield     = true
 }
 
 datasource db {
@@ -10,6 +12,42 @@ datasource db {
     url      = "file:./db.sqlite"
     // url      = env("DATABASE_URL")
 }
+
+model ClientProfile {
+    id         String   @id @default(cuid())
+    familyName String
+    email      String
+    phone      String
+    address    String
+    size       Int
+    veteran    Boolean
+    transitMethod String
+
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+}
+model TeamMember {
+    id         String   @id @default(cuid())
+    firstName  String
+    lastName   String
+    email      String
+    phone      String
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+}
+
+model Food {
+    id         String   @id @default(cuid())
+    name       String
+    description String
+    price      Int
+    image      String
+    shelfLife  Int
+    perishable Boolean
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+}
+
 
 model Example {
     id String @id @default(cuid())
